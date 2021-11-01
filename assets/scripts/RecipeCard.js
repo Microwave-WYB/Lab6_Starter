@@ -151,7 +151,7 @@ class RecipeCard extends HTMLElement {
     organization.innerHTML = getOrganization(data);
 
     time = convertTime(searchForKey(data, "totalTime"));
-    ingredients.innerHTML = createIngredientList(searchForKey(data, "recipeIngredients"));
+    ingredients.innerHTML = createIngredientList(searchForKey(data, "recipeIngredient"));
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(card);
