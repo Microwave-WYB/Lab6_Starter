@@ -3,17 +3,17 @@
 // Here is where the recipes that you will fetch.
 // Feel free to add your own here for part 2, if they are local files simply add their path as a string.
 const recipes = [
-  'https://introweb.tech/assets/json/ghostCookies.json',
-  'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  "https://introweb.tech/assets/json/ghostCookies.json",
+  "https://introweb.tech/assets/json/birthdayCake.json",
+  "https://introweb.tech/assets/json/chocolateChip.json",
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
 // data will be added to this object below. You may use whatever you like for the
 // keys as long as it's unique, one suggestion might but the URL itself
-const recipeData = {}
+const recipeData = {};
 
-window.addEventListener('DOMContentLoaded', init);
+window.addEventListener("DOMContentLoaded", init);
 
 // This is the first function to be called, so when you are tracing your code start here.
 async function init() {
@@ -21,9 +21,9 @@ async function init() {
   let fetchSuccessful = await fetchRecipes();
   // if they didn't successfully load, quit the function
   if (!fetchSuccessful) {
-    console.log('Recipe fetch unsuccessful');
+    console.log("Recipe fetch unsuccessful");
     return;
-  };
+  }
   // Add the first three recipe cards to the page
   createRecipeCards();
   // Make the "Show more" button functional
@@ -43,37 +43,65 @@ async function fetchRecipes() {
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
     // Part 1 Expose - TODO
+    // fech the recipes
+
+    console.log("fetching data");
     for (let i = 0; i < recipes.length; i++) {
-      let response = await fetch(recipes[i]);
-      recipeData[recipes[i]] = response;
+      fetch(recipes[i], {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          recipeData[recipes[i]] = data;
+          console.log(recipeData[recipes[i]]);
+        })
+        .then((result) => {
+          console.log("Success:", result);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
+    resolve(true);
+    console.log("finished fetching data");
   });
 }
 
 function createRecipeCards() {
   // This function is called for you up above.
-  // From within this function you can access the recipe data from the JSON 
-  // files with the recipeData Object above. Make sure you only display the 
+  // From within this function you can access the recipe data from the JSON
+  // files with the recipeData Object above. Make sure you only display the
   // three recipes we give you, you'll use the bindShowMore() function to
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
+  setTimeout(() => {
+    for (let i = 0; i < recipes.length; i++) {
+      let recipe_card = document.createElement("recipe-card");
+      recipe_card.data = recipeData[recipes[i]];
+      document.querySelector("main").appendChild(recipe_card);
+    }
+  }, 1000);
+
+  console.log("creating cards");
+  /*
   for (let key in recipeData) {
+    console.log("hello");
     if (recipeData.hasOwnProperty(key)) {
       recipe_card = document.createElement('recipe-card');
       recipe_card.data = recipeData[key];
       document.querySelector('main').appendChild(recipe_card);
     }
   }
+  */
 }
 
 function bindShowMore() {
   // This function is also called for you up above.
-  // Use this to add the event listener to the "Show more" button, from within 
+  // Use this to add the event listener to the "Show more" button, from within
   // that listener you can then create recipe cards for the rest of the .json files
   // that were fetched. You should fetch every recipe in the beginning, whether you
   // display it or not, so you don't need to fetch them again. Simply access them
   // in the recipeData object where you stored them/
-
   // Part 2 Explore - TODO
 }
