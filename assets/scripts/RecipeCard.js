@@ -108,7 +108,7 @@ class RecipeCard extends HTMLElement {
     let title = document.createElement("p");
     title.setAttribute("class", "title");
     let url = document.createElement("a");
-    title.innerHTML = url;
+    title.appendChild(url);
     let organization = document.createElement("div");
     organization.setAttribute("class", "organization");
     let rating = document.createElement("div");
@@ -146,7 +146,7 @@ class RecipeCard extends HTMLElement {
 
     // set attributes
     thumbnail.setAttribute("src", searchForKey(data, "thumbnailUrl"));
-    title.innerHTML = searchForKey(data, "headline");
+    url.innerHTML = searchForKey(data, "headline");
     url.setAttribute("href", getUrl(data));
     organization.innerHTML = getOrganization(data);
 
